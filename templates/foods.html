@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foods display</title>
+    </head>
+    <body>
+        <ul>
+            {% for food in foods %}
+                <li>
+                    <h1>{{food.name}}</h1>
+                    <p>
+                        {{food.description}}
+                    </p>
+                    <p>
+                        {{food.price}}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
