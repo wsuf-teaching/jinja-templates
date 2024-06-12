@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from foods import foods
 
 app = Flask(__name__)
 
-app.config['DEBUG'] = False
+app.config['DEBUG'] = True
 
 @app.route('/', methods=['GET'])
 def index():
@@ -25,23 +25,30 @@ def templateparams2(name):
 @app.route('/options')
 def options():
     name = "John Doe"
-    age = 66
-    isWelcome = False
+    age = 14
+    isWelcome = True
     return render_template('options.html', name=name, isWelcome=isWelcome, age=age)
 
 @app.route('/foods', methods=['GET'])
 def foodsdisplay():
     return render_template('foods.html', foods=foods)
 
-@app.route('/calculate/add/<int:a>/<int:b>')
-def add(a,b):
-    c = str(a+b)
-    return c
+@app.route('/base')
+def base():
+    return render_template('base.html')
 
-@app.route('/calculate/divide/<int:a>/<int:b>')
-def divide(a,b):
-    c = str(a/b)
-    return c
+@app.route('/theform', methods=['GET','POST'])
+def theform():
+    if request.method == 'GET':
+        return render_template('form.html')
+    else:
+        name = request.form['name']
+        location = request.form['location']
+        # do some calculation with the name and location
+        # name = ....
+        # and redirect the user to somewhere
+        return redirect(url_for('index'))
+        #return 'Hello {}. You are from {}. You have submitted the form successfully.'.format(name, location)
 
 if __name__ == '__main__':
     app.run()
